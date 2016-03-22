@@ -6,7 +6,7 @@ import java.util.Map;
 
 @IFMLLoadingPlugin.Name("CXLibraryCore")
 @IFMLLoadingPlugin.MCVersion("1.9")
-@IFMLLoadingPlugin.TransformerExclusions({"cubex2.cxlibrary.CoreModLoader", "cubex2.cxlibrary.CoreModTransformer"})
+@IFMLLoadingPlugin.TransformerExclusions({"cubex2.cxlibrary.CoreModLoader", "cubex2.cxlibrary.CoreModTransformer", "cubex2.cxlibrary.asm.ASMUtil"})
 @IFMLLoadingPlugin.SortingIndex(100)
 public class CoreModLoader implements IFMLLoadingPlugin
 {
