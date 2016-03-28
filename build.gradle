@@ -24,6 +24,9 @@ version = "0.0.1"
 group= "cubex2.cxlibrary" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "cxlibrary"
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 minecraft {
     version = "1.9-12.16.0.1797-1.9"
     runDir = "run"
