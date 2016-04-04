@@ -44,6 +44,11 @@ public class GuiTexture
         }
     }
 
+    public Rectangle getPart(String key)
+    {
+        return parts.get(key);
+    }
+
     public void addPart(String key, int x, int y, int width, int height)
     {
         parts.put(key, new Rectangle(x, y, width, height));
@@ -60,10 +65,43 @@ public class GuiTexture
         Gui.drawModalRectWithCustomSizedTexture(x, y, u, v, width, height, texWidth, texHeight);
     }
 
+    public void draw(int x, int y, int u, int v, int maxWidth, int maxHeight, float width, float height)
+    {
+        int w = (int) (maxWidth * width);
+        int h = (int) (maxHeight * height);
+
+        if (width < 0)
+        {
+            w = maxWidth + w;
+            u += maxWidth - h;
+            x += maxWidth - w;
+        }
+        if (height < 0)
+        {
+            h = maxHeight + h;
+            v += maxHeight - h;
+            y += maxHeight - h;
+        }
+
+        draw(x, y, u, v, w, h);
+    }
+
+    public void drawPart(String key, int x, int y, float width, float height)
+    {
+        Rectangle rect = parts.get(key);
+        draw(x, y, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), width, height);
+    }
+
     public void drawPart(String key, int x, int y)
     {
         Rectangle rect = parts.get(key);
         draw(x, y, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+    }
+
+    public void drawPart(String key, int x, int y, int width, int height)
+    {
+        Rectangle rect = parts.get(key);
+        draw(x, y, rect.getX(), rect.getY(), width, height);
     }
 
     public void drawPartSliced(String key, Rectangle rect)
