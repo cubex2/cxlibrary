@@ -1,21 +1,38 @@
 package cubex2.cxlibrary.gui.control;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import cubex2.cxlibrary.gui.data.IControlProvider;
 
 import java.util.List;
+import java.util.Map;
 
-public class ControlContainer<T extends Control> extends Control
+public class ControlContainer<T extends Control> extends Control implements IControlProvider
 {
     private final List<T> children = Lists.newLinkedList();
+    private final Map<String, T> childrenMap = Maps.newHashMap();
 
     public ControlContainer(Anchor anchor, ControlContainer parent)
     {
         super(anchor, parent);
     }
 
-    public void addChild(T child)
+    public void addChild(T child, String name)
     {
         children.add(child);
+        if (name != null)
+            childrenMap.put(name, child);
+    }
+
+    @Override
+    public Control getControl(String name)
+    {
+        if (childrenMap.containsKey(name))
+            return childrenMap.get(name);
+        /*if (parent != null && parent != this)
+            return parent.getControl(name);*/
+
+        return null;
     }
 
     @Override
@@ -107,4 +124,6 @@ public class ControlContainer<T extends Control> extends Control
 
         children.forEach(Control::onClosed);
     }
+
+
 }

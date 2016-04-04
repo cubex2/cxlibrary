@@ -9,7 +9,7 @@ public class Control extends Gui
 {
     public final Minecraft mc;
 
-    private final ControlContainer parent;
+    protected final ControlContainer parent;
     protected final Screen screen;
 
     private final Anchor anchor;

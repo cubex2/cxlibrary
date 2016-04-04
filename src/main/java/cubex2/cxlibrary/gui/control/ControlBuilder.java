@@ -1,16 +1,32 @@
 package cubex2.cxlibrary.gui.control;
 
+import cubex2.cxlibrary.gui.data.GuiData;
+
 public abstract class ControlBuilder<T extends Control>
 {
     protected final ControlContainer<Control> parent;
-    protected final Anchor anchor = new Anchor();
+    protected final Anchor anchor;
+    protected final GuiData data;
+    private final String name;
 
-    public ControlBuilder(ControlContainer<Control> parent) {this.parent = parent;}
+    public ControlBuilder(GuiData data, String name, ControlContainer<Control> parent)
+    {
+        this.parent = parent;
+        this.data = data;
+        this.name = name;
+        if (name != null)
+        {
+            anchor = data.apply(name, parent, parent);
+        } else
+        {
+            anchor = new Anchor();
+        }
+    }
 
     public T add()
     {
         T control = createInstance();
-        parent.addChild(control);
+        parent.addChild(control, name);
         return control;
     }
 

@@ -73,6 +73,18 @@ public class Anchor
         return this;
     }
 
+    public Anchor width(int w)
+    {
+        width = w;
+        return this;
+    }
+
+    public Anchor height(int h)
+    {
+        height = h;
+        return this;
+    }
+
     public Anchor centerHorIn(Control c)
     {
         return left(c, 0, true).right(c, 0, true);
