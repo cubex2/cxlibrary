@@ -1,11 +1,14 @@
 package cubex2.cxlibrary.gui;
 
 import com.google.common.collect.Maps;
+import com.google.gson.reflect.TypeToken;
+import cubex2.cxlibrary.util.ClientUtil;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import org.lwjgl.util.Rectangle;
 
+import java.lang.reflect.Type;
 import java.util.Map;
 
 public class GuiTexture
@@ -16,16 +19,39 @@ public class GuiTexture
 
     private Map<String, Rectangle> parts = Maps.newHashMap();
 
-    public GuiTexture(ResourceLocation location, int width, int height)
+    public GuiTexture(ResourceLocation location, int width, int height, boolean hasPartJson)
     {
         this.location = location;
         texWidth = width;
         texHeight = height;
+
+        if (hasPartJson)
+            loadTextureParts();
+    }
+
+    private void loadTextureParts()
+    {
+        String json = ClientUtil.readResource(new ResourceLocation(location.toString().replace(".png", ".parts.json")));
+        if (json == null) return;
+
+        Type type = new TypeToken<Map<String, Rectangle>>() {}.getType();
+        Map<String, Rectangle> map = ClientUtil.gson.fromJson(json, type);
+        if (map == null) return;
+
+        for (Map.Entry<String, Rectangle> entry : map.entrySet())
+        {
+            addPart(entry.getKey(), entry.getValue());
+        }
     }
 
     public void addPart(String key, int x, int y, int width, int height)
     {
         parts.put(key, new Rectangle(x, y, width, height));
+    }
+
+    public void addPart(String key, Rectangle rect)
+    {
+        parts.put(key, rect);
     }
 
     public void draw(int x, int y, int u, int v, int width, int height)

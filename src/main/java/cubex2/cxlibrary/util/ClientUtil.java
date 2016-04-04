@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class ClientUtil
 {
-    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    public static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static final Map<ResourceLocation, GuiData> guiCache = Maps.newHashMap();
 
     public static String readResource(ResourceLocation location)
