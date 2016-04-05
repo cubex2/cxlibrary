@@ -8,14 +8,12 @@ import org.lwjgl.util.Rectangle;
 
 public class Screen extends ControlContainer<Control>
 {
-    private GuiCX gui;
-    protected GuiData data;
+    protected GuiCX gui;
+
 
     public Screen(ResourceLocation location)
     {
-        super(new Anchor(), null);
-
-        data = ClientUtil.loadGuiData(location, true);
+        super(location, new Anchor(), null);
     }
 
     public void setGui(GuiCX gui)
@@ -27,5 +25,10 @@ public class Screen extends ControlContainer<Control>
     public Rectangle getBounds()
     {
         return new Rectangle(0, 0, gui.width, gui.height);
+    }
+
+    public boolean doesPauseGame()
+    {
+        return true;
     }
 }

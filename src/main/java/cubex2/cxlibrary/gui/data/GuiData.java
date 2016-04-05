@@ -3,7 +3,10 @@ package cubex2.cxlibrary.gui.data;
 import com.google.common.collect.Maps;
 import cubex2.cxlibrary.gui.control.Anchor;
 import cubex2.cxlibrary.gui.control.ControlContainer;
+import cubex2.cxlibrary.gui.control.SlotControl;
+import cubex2.cxlibrary.inventory.ISlotCX;
 import cubex2.cxlibrary.util.ClientUtil;
+import cubex2.cxlibrary.util.Util;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
@@ -13,6 +16,7 @@ public class GuiData
 {
     private String parent;
     private List<ControlData> controls;
+    private Map<String, SlotData[]> slots;
 
     private transient GuiData parentData;
 
@@ -36,6 +40,22 @@ public class GuiData
         return new Anchor();
     }
 
+    public SlotControl.Builder apply(SlotControl.Builder builder)
+    {
+        if (builder.slot instanceof ISlotCX)
+        {
+            String name = ((ISlotCX) builder.slot).getName();
+
+            SlotData[] slotDatas = slots.get(name);
+            for (SlotData slotData : slotDatas)
+            {
+                if (slotData.apply(builder))
+                    return builder;
+            }
+        }
+        return builder;
+    }
+
     private void loadParent()
     {
         if (parent != null && parentData == null)
@@ -44,7 +64,6 @@ public class GuiData
             parentData.loadParent();
 
             Map<String, ControlData> parentControls = parentData.asMap();
-
             for (ControlData control : controls)
             {
                 if (parentControls.containsKey(control.name))
@@ -57,18 +76,43 @@ public class GuiData
                 }
             }
 
+            Map<String, SlotData[]> parentSlots = parentData.cloneSlots();
+            if (slots != null)
+            {
+                for (Map.Entry<String, SlotData[]> entry : slots.entrySet())
+                {
+                    parentSlots.put(entry.getKey(), entry.getValue());
+                }
+            }
+
             controls.clear();
             controls.addAll(parentControls.values());
         }
     }
 
+    private Map<String, SlotData[]> cloneSlots()
+    {
+        Map<String, SlotData[]> ret = Maps.newLinkedHashMap();
+
+        if (slots != null)
+        {
+            for (Map.Entry<String, SlotData[]> entry : slots.entrySet())
+            {
+                SlotData[] array = new SlotData[entry.getValue().length];
+                ret.put(entry.getKey(), Util.deepClone(array, SlotData.class));
+            }
+        }
+
+        return ret;
+    }
+
     private Map<String, ControlData> asMap()
     {
-        Map<String, ControlData> ret = Maps.newHashMap();
+        Map<String, ControlData> ret = Maps.newLinkedHashMap();
 
         for (ControlData data : controls)
         {
-            ret.put(data.name, data);
+            ret.put(data.name, data.clone());
         }
 
         return ret;

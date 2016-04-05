@@ -4,12 +4,12 @@ import cubex2.cxlibrary.gui.data.GuiData;
 
 public abstract class ControlBuilder<T extends Control>
 {
-    protected final ControlContainer<Control> parent;
+    protected final ControlContainer parent;
     protected final Anchor anchor;
     protected final GuiData data;
     private final String name;
 
-    public ControlBuilder(GuiData data, String name, ControlContainer<Control> parent)
+    public ControlBuilder(GuiData data, String name, ControlContainer parent)
     {
         this.parent = parent;
         this.data = data;

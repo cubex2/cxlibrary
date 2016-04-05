@@ -21,6 +21,11 @@ public class ControlData
     private String ctop = null; // null is parent
     private String cbottom = null; // null is parent
 
+    private Boolean sameSideLeft = null;
+    private Boolean sameSideRight = null;
+    private Boolean sameSideTop = null;
+    private Boolean sameSideBottom = null;
+
     /** Overrides left and right. Sets both to 0 */
     private Boolean centerHor = null;
     /** Overrides top and bottom. Sets both to 0 */
@@ -47,25 +52,25 @@ public class ControlData
         if (left != null)
         {
             Control c = cleft == null ? parent : provider.getControl(cleft);
-            anchor.left(c, left, c == parent);
+            anchor.left(c, left, c == parent || (sameSideLeft != null && sameSideLeft));
         }
 
         if (right != null)
         {
             Control c = cright == null ? parent : provider.getControl(cright);
-            anchor.right(c, right, c == parent);
+            anchor.right(c, right, c == parent || (sameSideRight != null && sameSideRight));
         }
 
         if (top != null)
         {
             Control c = ctop == null ? parent : provider.getControl(ctop);
-            anchor.top(c, top, c == parent);
+            anchor.top(c, top, c == parent || (sameSideTop != null && sameSideTop));
         }
 
         if (bottom != null)
         {
             Control c = cbottom == null ? parent : provider.getControl(cbottom);
-            anchor.bottom(c, bottom, c == parent);
+            anchor.bottom(c, bottom, c == parent || (sameSideBottom != null && sameSideBottom));
         }
     }
 
@@ -90,6 +95,40 @@ public class ControlData
             centerHor = data.centerHor;
         if (data.centerVert != null)
             centerVert = data.centerVert;
+
+        if (data.sameSideLeft != null)
+            sameSideLeft = data.sameSideLeft;
+        if (data.sameSideRight != null)
+            sameSideRight = data.sameSideRight;
+        if (data.sameSideTop != null)
+            sameSideTop = data.sameSideTop;
+        if (data.sameSideBottom != null)
+            sameSideBottom = data.sameSideBottom;
+    }
+
+    @Override
+    protected ControlData clone()
+    {
+        ControlData data = new ControlData();
+        data.name = name;
+        data.width = width;
+        data.height = height;
+        data.left = left;
+        data.right = right;
+        data.top = top;
+        data.bottom = bottom;
+        data.cleft = cleft;
+        data.cright = cright;
+        data.ctop = ctop;
+        data.cbottom = cbottom;
+        data.center = center;
+        data.centerVert = centerVert;
+        data.centerHor = centerHor;
+        data.sameSideLeft = sameSideLeft;
+        data.sameSideRight = sameSideRight;
+        data.sameSideTop = sameSideTop;
+        data.sameSideBottom = sameSideBottom;
+        return data;
     }
 
 

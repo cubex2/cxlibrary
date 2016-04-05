@@ -4,6 +4,7 @@ import cubex2.cxlibrary.gui.control.Screen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.item.ItemStack;
 import org.lwjgl.input.Mouse;
 
 import java.io.IOException;
@@ -40,6 +41,7 @@ public class GuiCX extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         screen.draw(mouseX, mouseY, partialTicks);
+        screen.drawForeground(mouseX, mouseY, partialTicks);
     }
 
     @Override
@@ -72,5 +74,17 @@ public class GuiCX extends GuiScreen
     public void onGuiClosed()
     {
         screen.onClosed();
+    }
+
+    @Override
+    public boolean doesGuiPauseGame()
+    {
+        return screen.doesPauseGame();
+    }
+
+    @Override
+    public void renderToolTip(ItemStack stack, int x, int y)
+    {
+        super.renderToolTip(stack, x, y);
     }
 }

@@ -59,12 +59,37 @@ public class Control extends Gui
         return bounds;
     }
 
+    public int getX()
+    {
+        return bounds.getX();
+    }
+
+    public int getY()
+    {
+        return bounds.getY();
+    }
+
+    public int getWidth()
+    {
+        return bounds.getWidth();
+    }
+
+    public int getHeight()
+    {
+        return bounds.getHeight();
+    }
+
     public void updateBounds()
     {
         bounds = anchor.apply();
     }
 
     public void draw(int mouseX, int mouseY, float partialTicks)
+    {
+
+    }
+
+    public void drawForeground(int mouseX, int mouseY, float partialTicks)
     {
 
     }
@@ -97,5 +122,10 @@ public class Control extends Gui
     public void onClosed()
     {
 
+    }
+
+    public boolean isMouseOverControl(int mouseX, int mouseY)
+    {
+        return bounds.contains(mouseX, mouseY);
     }
 }
