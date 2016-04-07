@@ -82,6 +82,20 @@ public class ScreenContainer extends Screen
         }
     }
 
+    public SlotControl getSlot(String name, int index)
+    {
+        for (SlotControl slotControl : slots)
+        {
+            Slot slot = slotControl.getSlot();
+            if (slot instanceof ISlotCX && name.equals(((ISlotCX) slot).getName())
+                    && slot.getSlotIndex() == index)
+            {
+                return slotControl;
+            }
+        }
+        return null;
+    }
+
     public SlotControl.Builder slot(String name, Slot slot)
     {
         return new SlotControl.Builder(slot, data, name, window);
@@ -351,9 +365,10 @@ public class ScreenContainer extends Screen
     }
 
     @Override
-    public void mouseClicked(int mouseX, int mouseY, int mouseButton)
+    public void mouseClicked(int mouseX, int mouseY, int mouseButton, boolean intoControl)
     {
-        super.mouseClicked(mouseX, mouseY, mouseButton);
+        super.mouseClicked(mouseX, mouseY, mouseButton, intoControl);
+
         boolean flag = mouseButton == mc.gameSettings.keyBindPickBlock.getKeyCode() + 100;
         Slot slot = getSlotAtPosition(mouseX, mouseY);
         long i = Minecraft.getSystemTime();

@@ -12,7 +12,7 @@ public class Control extends Gui
     protected final ControlContainer parent;
     protected final Screen screen;
 
-    private final Anchor anchor;
+    protected final Anchor anchor;
     private Rectangle bounds;
 
     private boolean isEnabled = true;
@@ -99,7 +99,7 @@ public class Control extends Gui
 
     }
 
-    public void mouseClicked(int mouseX, int mouseY, int button)
+    public void mouseClicked(int mouseX, int mouseY, int button, boolean intoControl)
     {
 
     }

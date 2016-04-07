@@ -8,6 +8,7 @@ import cubex2.cxlibrary.gui.data.IControlProvider;
 import cubex2.cxlibrary.util.ClientUtil;
 import net.minecraft.util.ResourceLocation;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -95,13 +96,30 @@ public class ControlContainer<T extends Control> extends Control implements ICon
     }
 
     @Override
-    public void mouseClicked(int mouseX, int mouseY, int button)
+    public void mouseClicked(int mouseX, int mouseY, int button, boolean intoControl)
     {
-        super.mouseClicked(mouseX, mouseY, button);
+        super.mouseClicked(mouseX, mouseY, button, intoControl);
 
-        children.stream()
-                .filter(Control::isEnabled)
-                .forEach(c -> c.mouseClicked(mouseX, mouseY, button));
+        Iterator<T> it = children.stream()
+                                 .filter(Control::isEnabled).iterator();
+
+        while (it.hasNext())
+        {
+            T c = it.next();
+
+            boolean inControl = c.isMouseOverControl(mouseX, mouseY);
+            c.mouseClicked(mouseX, mouseY, button, inControl);
+            if (inControl)
+            {
+                controlClicked(c, mouseX, mouseY, button);
+            }
+        }
+    }
+
+    protected void controlClicked(T c, int mouseX, int mouseY, int button)
+    {
+        if (parent instanceof ControlContainer)
+            parent.controlClicked(c, mouseX, mouseY, button);
     }
 
     @Override
@@ -160,6 +178,16 @@ public class ControlContainer<T extends Control> extends Control implements ICon
     public VerticalProgressBar.Builder verticalBar(String name, GuiTexture texture, String part)
     {
         return new VerticalProgressBar.Builder(texture, part, data, name, this);
+    }
+
+    public Button.Builder button(String name, String text)
+    {
+        return new Button.Builder(text, data, name, this);
+    }
+
+    public Label.Builder label(String name, String text)
+    {
+        return new Label.Builder(text, data, name, this);
     }
 
     public static class Builder<S extends Control> extends ControlBuilder<ControlContainer<S>>

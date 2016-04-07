@@ -116,7 +116,8 @@ public class Anchor
         {
             if (w > 0)
             {
-                x = getAnchorLeft() + (getAnchorRight() - getAnchorLeft() - w) / 2;
+                int actW = (getAnchorRight() - distanceRight) - (getAnchorLeft() + distanceLeft);
+                x = getAnchorLeft() + distanceLeft + (actW - w) / 2;
             } else
             {
                 x = getAnchorLeft() + distanceLeft;
@@ -134,7 +135,8 @@ public class Anchor
         {
             if (h > 0)
             {
-                y = getAnchorTop() + (getAnchorBottom() - getAnchorTop() - h) / 2;
+                int actH = (getAnchorBottom() - distanceBottom) - (getAnchorTop() + distanceTop);
+                y = getAnchorTop() + distanceTop + (actH - h) / 2;
             } else
             {
                 y = getAnchorTop() + distanceTop;

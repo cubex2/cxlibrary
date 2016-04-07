@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import org.lwjgl.input.Mouse;
 
 import java.io.IOException;
+import java.util.List;
 
 public class GuiCX extends GuiScreen
 {
@@ -55,7 +56,7 @@ public class GuiCX extends GuiScreen
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int button) throws IOException
     {
-        screen.mouseClicked(mouseX, mouseY, button);
+        screen.mouseClicked(mouseX, mouseY, button, true);
     }
 
     @Override
@@ -86,5 +87,11 @@ public class GuiCX extends GuiScreen
     public void renderToolTip(ItemStack stack, int x, int y)
     {
         super.renderToolTip(stack, x, y);
+    }
+
+    @Override
+    public void drawHoveringText(List<String> textLines, int x, int y)
+    {
+        super.drawHoveringText(textLines, x, y);
     }
 }
