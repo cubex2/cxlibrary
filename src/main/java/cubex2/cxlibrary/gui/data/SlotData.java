@@ -32,7 +32,15 @@ public class SlotData implements Cloneable<SlotData>
 
         int gridX = index % cols;
         int gridY = index / cols;
-        builder.left(gridX * 18 + x).top(gridY * 18 + y);
+        if (x >= 0)
+            builder.left(gridX * 18 + x);
+        else
+            builder.right(-gridX * 18 - x - 16);
+
+        if (y >= 0)
+            builder.top(gridY * 18 + y);
+        else
+            builder.bottom(-gridY * 18 - y - 16);
 
         return true;
     }
