@@ -52,6 +52,10 @@ public class PacketTransformer extends ClassTransformer
         String className = Type.getType(desc).getClassName();
         String methodName = "write" + className.substring(0, 1).toUpperCase() + className.substring(1);
 
+        // ByteBuf takes int for writeByte and writeShort
+        if (desc.equals("B") || desc.equals("S"))
+            desc = "I";
+
         m.visitVarInsn(ALOAD, 1);
         m.visitVarInsn(ALOAD, 0);
         m.visitFieldInsn(GETFIELD, classNode.name, field.name, field.desc);
