@@ -6,8 +6,6 @@ import cubex2.cxlibrary.gui.control.ControlContainer;
 
 public class ControlData
 {
-    public String name;
-
     private Integer width = null;
     private Integer height = null;
 
@@ -110,7 +108,6 @@ public class ControlData
     protected ControlData clone()
     {
         ControlData data = new ControlData();
-        data.name = name;
         data.width = width;
         data.height = height;
         data.left = left;
