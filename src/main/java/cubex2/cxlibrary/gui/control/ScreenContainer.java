@@ -24,10 +24,8 @@ import org.lwjgl.input.Keyboard;
 import java.util.List;
 import java.util.Set;
 
-public class ScreenContainer extends Screen
+public class ScreenContainer extends ScreenCenter
 {
-    protected final ControlContainer<Control> window;
-
     protected RenderItem itemRender;
     protected FontRenderer fontRendererObj;
 
@@ -68,7 +66,7 @@ public class ScreenContainer extends Screen
         super(location);
         this.container = container;
 
-        window = container("bg", location).add();
+
 
         for (Slot slot : container.inventorySlots)
         {

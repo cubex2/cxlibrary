@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
+import cubex2.cxlibrary.gui.data.ControlData;
 import cubex2.cxlibrary.gui.data.GuiData;
 import cubex2.cxlibrary.gui.data.SlotData;
 import net.minecraft.client.Minecraft;
@@ -19,15 +20,6 @@ import java.util.Map;
 
 public class ClientUtil
 {
-    public static final Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(new TypeToken<Map<String, SlotData[]>>() {}.getType(), (JsonDeserializer<Map<String, SlotData[]>>) (json, typeOfT, context) -> {
-        Map<String, SlotData[]> map = Maps.newHashMap();
-        for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet())
-        {
-            map.put(entry.getKey(), context.deserialize(entry.getValue(), new TypeToken<SlotData[]>() {}.getType()));
-        }
-        return map;
-    }).create();
-
     private static final Map<ResourceLocation, GuiData> guiCache = Maps.newHashMap();
 
     public static String readResource(ResourceLocation location)
@@ -64,4 +56,27 @@ public class ClientUtil
         guiCache.put(location, data);
         return data;
     }
+
+    private static final JsonDeserializer<Map<String, SlotData[]>> SlotDataArrayMapDeserializer = (json, typeOfT, context) -> {
+        Map<String, SlotData[]> map = Maps.newHashMap();
+        for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet())
+        {
+            map.put(entry.getKey(), context.deserialize(entry.getValue(), new TypeToken<SlotData[]>() {}.getType()));
+        }
+        return map;
+    };
+
+    private static final JsonDeserializer<Map<String, ControlData>> ControlDataMapDeserializer = (json, typeOfT, context) -> {
+        Map<String, ControlData> map = Maps.newHashMap();
+        for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet())
+        {
+            map.put(entry.getKey(), context.deserialize(entry.getValue(), new TypeToken<ControlData>() {}.getType()));
+        }
+        return map;
+    };
+
+    public static final Gson gson = new GsonBuilder().setPrettyPrinting()
+                                                     .registerTypeAdapter(new TypeToken<Map<String, SlotData[]>>() {}.getType(), SlotDataArrayMapDeserializer)
+                                                     .registerTypeAdapter(new TypeToken<Map<String, ControlData>>() {}.getType(), ControlDataMapDeserializer)
+                                                     .create();
 }

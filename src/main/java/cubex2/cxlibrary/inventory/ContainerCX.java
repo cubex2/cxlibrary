@@ -14,6 +14,11 @@ public abstract class ContainerCX extends Container
         addSlotRange("player", inv, 0, inv.mainInventory.length);
     }
 
+    protected void addSlotRange(String invName, IInventory inv)
+    {
+        addSlotRange(invName, inv, 0, inv.getSizeInventory());
+    }
+
     protected void addSlotRange(String invName, IInventory inv, int start, int num)
     {
         for (int i = 0; i < num; i++)
