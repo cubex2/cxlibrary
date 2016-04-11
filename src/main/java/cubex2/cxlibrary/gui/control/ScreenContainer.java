@@ -60,22 +60,30 @@ public class ScreenContainer extends ScreenCenter
 
     // TODO make slots controls
     private List<SlotControl> slots = Lists.newLinkedList();
+    private SlotControl[] hotbarSlots = new SlotControl[9];
 
     public ScreenContainer(Container container, ResourceLocation location)
     {
         super(location);
         this.container = container;
 
-
-
         for (Slot slot : container.inventorySlots)
         {
+            SlotControl slotControl;
             if (slot instanceof ISlotCX)
             {
-                slots.add(data.apply(slot(null, slot)).add());
+                slotControl = data.apply(slot(null, slot)).add();
             } else
             {
-                slots.add(slot(null, slot).left(slot.xDisplayPosition).top(slot.yDisplayPosition).add());
+                slotControl = slot(null, slot).left(slot.xDisplayPosition).top(slot.yDisplayPosition).add();
+            }
+
+            slots.add(slotControl);
+            if (slot.inventory instanceof InventoryPlayer
+                    && slot.getSlotIndex() >= 0 && slot.getSlotIndex() < 9
+                    && ((InventoryPlayer) slot.inventory).player == mc.thePlayer)
+            {
+                hotbarSlots[slot.getSlotIndex()] = slotControl;
             }
         }
     }
@@ -131,11 +139,14 @@ public class ScreenContainer extends ScreenCenter
 
         for (SlotControl slot : slots)
         {
-            drawSlotAt(slot.getSlot(), slot.getX(), slot.getY());
+            if (slot.isVisible())
+                drawSlotAt(slot.getSlot(), slot.getX(), slot.getY());
             if (slot.isMouseOverControl(mouseX, mouseY) && slot.getSlot().canBeHovered())
             {
-                theSlot = slot.getSlot();
-                drawSlotMouseOver(slot.getX(), slot.getY());
+                if (slot.isEnabled())
+                    theSlot = slot.getSlot();
+                if (slot.isVisible())
+                    drawSlotMouseOver(slot.getX(), slot.getY());
             }
         }
     }
@@ -151,7 +162,6 @@ public class ScreenContainer extends ScreenCenter
         drawDraggedStack(mouseX, mouseY);
         drawReturningStack();
         GlStateManager.popMatrix();
-        drawToolTip(mouseX, mouseY);
 
         GlStateManager.enableLighting();
         GlStateManager.enableDepth();
@@ -216,17 +226,6 @@ public class ScreenContainer extends ScreenCenter
             }
 
             drawItemStack(itemstack, mouseX - window.getX() - j2, mouseY - window.getY() - k2, s);
-        }
-    }
-
-    private void drawToolTip(int mouseX, int mouseY)
-    {
-        InventoryPlayer inventoryplayer = mc.thePlayer.inventory;
-
-        if (inventoryplayer.getItemStack() == null && theSlot != null && theSlot.getHasStack())
-        {
-            ItemStack itemstack1 = theSlot.getStack();
-            gui.renderToolTip(itemstack1, mouseX, mouseY);
         }
     }
 
@@ -353,7 +352,7 @@ public class ScreenContainer extends ScreenCenter
     {
         for (SlotControl slot : slots)
         {
-            if (slot.getBounds().contains(x, y))
+            if (slot.isEnabled() && slot.getBounds().contains(x, y))
             {
                 return slot.getSlot();
             }
@@ -679,7 +678,8 @@ public class ScreenContainer extends ScreenCenter
         {
             for (int i = 0; i < 9; ++i)
             {
-                if (keyCode == this.mc.gameSettings.keyBindsHotbar[i].getKeyCode())
+                if (keyCode == this.mc.gameSettings.keyBindsHotbar[i].getKeyCode()
+                        && (hotbarSlots[i] == null || hotbarSlots[i].isEnabled()))
                 {
                     this.handleMouseClick(this.theSlot, this.theSlot.slotNumber, i, ClickType.SWAP);
                     return true;
