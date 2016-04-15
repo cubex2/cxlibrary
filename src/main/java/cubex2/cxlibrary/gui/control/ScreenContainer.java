@@ -58,7 +58,6 @@ public class ScreenContainer extends ScreenCenter
     private boolean doubleClick;
     private ItemStack shiftClickedSlot;
 
-    // TODO make slots controls
     private List<SlotControl> slots = Lists.newLinkedList();
     private SlotControl[] hotbarSlots = new SlotControl[9];
 
