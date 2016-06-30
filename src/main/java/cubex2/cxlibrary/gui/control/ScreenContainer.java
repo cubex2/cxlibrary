@@ -365,7 +365,7 @@ public class ScreenContainer extends ScreenCenter
     {
         super.mouseClicked(mouseX, mouseY, mouseButton, intoControl);
 
-        boolean flag = mouseButton == mc.gameSettings.keyBindPickBlock.getKeyCode() + 100;
+        boolean flag = mc.gameSettings.keyBindPickBlock.isActiveAndMatches(mouseButton-100);
         Slot slot = getSlotAtPosition(mouseX, mouseY);
         long i = Minecraft.getSystemTime();
         doubleClick = lastClickSlot == slot && i - lastClickTime < 250L && lastClickButton == mouseButton;
@@ -409,7 +409,7 @@ public class ScreenContainer extends ScreenCenter
                 {
                     if (mc.thePlayer.inventory.getItemStack() == null)
                     {
-                        if (mouseButton == mc.gameSettings.keyBindPickBlock.getKeyCode() + 100)
+                        if (mc.gameSettings.keyBindPickBlock.isActiveAndMatches(mouseButton - 100))
                         {
                             handleMouseClick(slot, l, mouseButton, ClickType.CLONE);
                         } else
@@ -442,7 +442,7 @@ public class ScreenContainer extends ScreenCenter
                         } else if (mouseButton == 1)
                         {
                             dragSplittingLimit = 1;
-                        } else if (mouseButton == mc.gameSettings.keyBindPickBlock.getKeyCode() + 100)
+                        } else if (mc.gameSettings.keyBindPickBlock.isActiveAndMatches(mouseButton - 100))
                         {
                             dragSplittingLimit = 2;
                         }
@@ -612,7 +612,7 @@ public class ScreenContainer extends ScreenCenter
                 this.handleMouseClick(null, -999, Container.getQuickcraftMask(2, this.dragSplittingLimit), ClickType.QUICK_CRAFT);
             } else if (this.mc.thePlayer.inventory.getItemStack() != null)
             {
-                if (state == this.mc.gameSettings.keyBindPickBlock.getKeyCode() + 100)
+                if (mc.gameSettings.keyBindPickBlock.isActiveAndMatches(state - 100))
                 {
                     this.handleMouseClick(slot, k, state, ClickType.CLONE);
                 } else
