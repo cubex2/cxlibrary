@@ -29,7 +29,7 @@ public class ScreenContainer extends ScreenCenter
     protected RenderItem itemRender;
     protected FontRenderer fontRendererObj;
 
-    private final Container container;
+    public final Container container;
     /** holds the slot currently hovered */
     private Slot theSlot;
     /** Used when touchscreen is enabled. */
@@ -120,7 +120,7 @@ public class ScreenContainer extends ScreenCenter
     @Override
     public void draw(int mouseX, int mouseY, float partialTicks)
     {
-        gui.drawDefaultBackground();
+        gui.drawTheDefaultBackground();
 
         super.draw(mouseX, mouseY, partialTicks);
 
@@ -637,7 +637,7 @@ public class ScreenContainer extends ScreenCenter
         this.dragSplitting = false;
     }
 
-    private void handleMouseClick(Slot slotIn, int slotId, int mouseButton, ClickType type)
+    protected void handleMouseClick(Slot slotIn, int slotId, int mouseButton, ClickType type)
     {
         if (slotIn != null)
         {

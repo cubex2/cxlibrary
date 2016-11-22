@@ -1,22 +1,19 @@
 package cubex2.cxlibrary.gui.control;
 
-import cubex2.cxlibrary.gui.GuiCX;
-import cubex2.cxlibrary.gui.data.GuiData;
-import cubex2.cxlibrary.util.ClientUtil;
+import cubex2.cxlibrary.gui.IGuiCX;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.util.Rectangle;
 
 public class Screen extends ControlContainer<Control>
 {
-    protected GuiCX gui;
-
+    protected IGuiCX gui;
 
     public Screen(ResourceLocation location)
     {
         super(location, new Anchor(), null);
     }
 
-    public void setGui(GuiCX gui)
+    public void setGui(IGuiCX gui)
     {
         this.gui = gui;
     }
@@ -24,7 +21,7 @@ public class Screen extends ControlContainer<Control>
     @Override
     public Rectangle getBounds()
     {
-        return new Rectangle(0, 0, gui.width, gui.height);
+        return new Rectangle(0, 0, gui.getTheWidth(), gui.getTheHeight());
     }
 
     public boolean doesPauseGame()

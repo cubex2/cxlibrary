@@ -7,14 +7,12 @@ import java.util.Collections;
 
 public class SlotControl extends Control
 {
-    private final ScreenContainer screenContainer;
     private String hoveringText;
     private final Slot slot;
 
     public SlotControl(Slot slot, Anchor anchor, ControlContainer parent)
     {
         super(anchor, parent);
-        screenContainer = (ScreenContainer) screen;
         this.slot = slot;
     }
 
@@ -35,12 +33,21 @@ public class SlotControl extends Control
         {
             if (hoveringText != null)
             {
-                screen.gui.drawHoveringText(Collections.singletonList(hoveringText), mouseX, mouseY);
+                screen.gui.drawTheHoveringText(Collections.singletonList(hoveringText), mouseX, mouseY);
             } else if (mc.thePlayer.inventory.getItemStack() == null && slot.getHasStack())
             {
-                screen.gui.renderToolTip(slot.getStack(), mouseX, mouseY);
+                screen.gui.renderTheToolTip(slot.getStack(), mouseX, mouseY);
             }
         }
+    }
+
+    @Override
+    public void updateBounds()
+    {
+        super.updateBounds();
+
+        slot.xDisplayPosition = getX() - parent.getX();
+        slot.yDisplayPosition = getY() - parent.getY();
     }
 
     public static class Builder extends ControlBuilder<SlotControl>
