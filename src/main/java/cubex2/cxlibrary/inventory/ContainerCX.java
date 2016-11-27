@@ -1,5 +1,6 @@
 package cubex2.cxlibrary.inventory;
 
+import javax.annotation.Nonnull;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -11,7 +12,7 @@ public abstract class ContainerCX extends Container
 {
     protected void addPlayerSlots(InventoryPlayer inv)
     {
-        addSlotRange("player", inv, 0, inv.mainInventory.length);
+        addSlotRange("player", inv, 0, inv.mainInventory.size());
     }
 
     protected void addSlotRange(String invName, IInventory inv)
@@ -28,9 +29,10 @@ public abstract class ContainerCX extends Container
     }
 
     @Override
+    @Nonnull
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
-        ItemStack stack = null;
+        ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack())
@@ -39,29 +41,30 @@ public abstract class ContainerCX extends Container
             stack = stack1.copy();
 
             if (transferStackInSlot(slot, index, stack1, stack))
-                return null;
+                return ItemStack.EMPTY;
 
-            if (stack1.stackSize == 0)
+            if (stack1.isEmpty())
             {
-                slot.putStack(null);
-            } else
+                slot.putStack(ItemStack.EMPTY);
+            }
+            else
             {
                 slot.onSlotChanged();
             }
 
-            if (stack1.stackSize == stack.stackSize)
+            if (stack1.getCount() == stack.getCount())
             {
-                return null;
+                return ItemStack.EMPTY;
             }
 
-            slot.onPickupFromSlot(playerIn, stack1);
+            slot.onTake(playerIn, stack1);
         }
 
         return stack;
 
     }
 
-    protected boolean transferStackInSlot(Slot slot, int index, ItemStack stack1, ItemStack stack)
+    protected boolean transferStackInSlot(Slot slot, int index, @Nonnull ItemStack stack1, @Nonnull ItemStack stack)
     {
         return false;
     }

@@ -1,6 +1,7 @@
 package cubex2.cxlibrary.gui;
 
 import cubex2.cxlibrary.gui.control.Screen;
+import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -84,7 +85,7 @@ public class GuiCX extends GuiScreen implements IGuiCX
     }
 
     @Override
-    public void renderTheToolTip(ItemStack stack, int x, int y)
+    public void renderTheToolTip(@Nonnull ItemStack stack, int x, int y)
     {
         renderToolTip(stack, x, y);
     }

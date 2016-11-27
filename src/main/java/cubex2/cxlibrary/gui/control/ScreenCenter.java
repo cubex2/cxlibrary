@@ -23,16 +23,17 @@ public class ScreenCenter extends Screen
 
         if (gui instanceof GuiContainerCX)
         {
-            GuiContainerCX guiContainer = (GuiContainerCX) gui;
+            GuiContainerCX guiContainer = (GuiContainerCX)gui;
 
             for (Slot slot : guiContainer.inventorySlots.inventorySlots)
             {
                 if (slot instanceof ISlotCX)
                 {
                     data.apply(slot(null, slot)).add();
-                } else
+                }
+                else
                 {
-                    slot(null, slot).left(slot.xDisplayPosition).top(slot.yDisplayPosition).add();
+                    slot(null, slot).left(slot.xPos).top(slot.yPos).add();
                 }
             }
         }

@@ -1,9 +1,8 @@
 package cubex2.cxlibrary.gui.control;
 
 import cubex2.cxlibrary.gui.data.GuiData;
-import net.minecraft.inventory.Slot;
-
 import java.util.Collections;
+import net.minecraft.inventory.Slot;
 
 public class SlotControl extends Control
 {
@@ -34,7 +33,8 @@ public class SlotControl extends Control
             if (hoveringText != null)
             {
                 screen.gui.drawTheHoveringText(Collections.singletonList(hoveringText), mouseX, mouseY);
-            } else if (mc.thePlayer.inventory.getItemStack() == null && slot.getHasStack())
+            }
+            else if (mc.player.inventory.getItemStack().isEmpty() && slot.getHasStack())
             {
                 screen.gui.renderTheToolTip(slot.getStack(), mouseX, mouseY);
             }
@@ -46,8 +46,8 @@ public class SlotControl extends Control
     {
         super.updateBounds();
 
-        slot.xDisplayPosition = getX() - parent.getX();
-        slot.yDisplayPosition = getY() - parent.getY();
+        slot.xPos = getX() - parent.getX();
+        slot.yPos = getY() - parent.getY();
     }
 
     public static class Builder extends ControlBuilder<SlotControl>
