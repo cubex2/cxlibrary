@@ -5,7 +5,7 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import java.util.Map;
 
 @IFMLLoadingPlugin.Name("CXLibraryCore")
-@IFMLLoadingPlugin.MCVersion("1.11")
+@IFMLLoadingPlugin.MCVersion("1.11.2")
 @IFMLLoadingPlugin.TransformerExclusions({"cubex2.cxlibrary.CoreModLoader", "cubex2.cxlibrary.CoreModTransformer", "cubex2.cxlibrary.asm.ASMUtil"})
 @IFMLLoadingPlugin.SortingIndex(100)
 public class CoreModLoader implements IFMLLoadingPlugin
