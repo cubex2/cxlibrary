@@ -38,7 +38,7 @@ public class Label extends Control
         int width = 0;
         for (int i = 0; i < lines.length; i++)
         {
-            int w = mc.fontRendererObj.getStringWidth(lines[i]);
+            int w = mc.fontRenderer.getStringWidth(lines[i]);
             if (w > width)
                 width = w;
         }
@@ -58,10 +58,10 @@ public class Label extends Control
             int y = getY() + i * 13;
             if (centered)
             {
-                mc.fontRendererObj.drawString(lines[i], getX() + (getWidth() - mc.fontRendererObj.getStringWidth(text)) / 2, y, color);
+                mc.fontRenderer.drawString(lines[i], getX() + (getWidth() - mc.fontRenderer.getStringWidth(text)) / 2, y, color);
             } else
             {
-                mc.fontRendererObj.drawString(lines[i], getX(), y, color);
+                mc.fontRenderer.drawString(lines[i], getX(), y, color);
             }
         }
     }

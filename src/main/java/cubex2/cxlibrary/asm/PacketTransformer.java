@@ -71,7 +71,7 @@ public class PacketTransformer extends ClassTransformer
         m.visitFieldInsn(GETFIELD, classNode.name, field.name, field.desc);
 
         if (desc.equals("Ljava/lang/String;"))
-            m.visitMethodInsn(INVOKESTATIC, "cpw/mods/fml/common/network/ByteBufUtils", "writeUTF8String", "(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V", false);
+            m.visitMethodInsn(INVOKESTATIC, "net/minecraftforge/fml/common/network/ByteBufUtils", "writeUTF8String", "(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V", false);
     }
 
     private void createFromBytes(ClassNode classNode)
@@ -109,7 +109,7 @@ public class PacketTransformer extends ClassTransformer
         m.visitVarInsn(ALOAD, 0);
         m.visitVarInsn(ALOAD, 1);
         if (desc.equals("Ljava/lang/String;"))
-            m.visitMethodInsn(INVOKESTATIC, "cpw/mods/fml/common/network/ByteBufUtils", "readUTF8String", "(Lio/netty/buffer/ByteBuf;)Ljava/lang/String;", false);
+            m.visitMethodInsn(INVOKESTATIC, "net/minecraftforge/fml/common/network/ByteBufUtils", "readUTF8String", "(Lio/netty/buffer/ByteBuf;)Ljava/lang/String;", false);
         m.visitFieldInsn(PUTFIELD, classNode.name, field.name, field.desc);
     }
 

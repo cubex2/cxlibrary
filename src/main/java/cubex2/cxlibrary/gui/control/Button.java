@@ -77,7 +77,7 @@ public class Button extends Control
         }
 
 
-        drawCenteredString(mc.fontRendererObj, text, getX() + getWidth() / 2, getY() + (getHeight() - 8) / 2, l);
+        drawCenteredString(mc.fontRenderer, text, getX() + getWidth() / 2, getY() + (getHeight() - 8) / 2, l);
     }
 
     public static class Builder extends ControlBuilder<Button>
