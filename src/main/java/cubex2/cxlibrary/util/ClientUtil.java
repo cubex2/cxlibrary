@@ -47,7 +47,6 @@ public class ClientUtil
     {
         if (useCache && guiCache.containsKey(location))
         {
-            System.out.println("Using cache for " + location);
             return guiCache.get(location);
         }
 
@@ -57,7 +56,8 @@ public class ClientUtil
         return data;
     }
 
-    private static final JsonDeserializer<Map<String, SlotData[]>> SlotDataArrayMapDeserializer = (json, typeOfT, context) -> {
+    private static final JsonDeserializer<Map<String, SlotData[]>> SlotDataArrayMapDeserializer = (json, typeOfT, context) ->
+    {
         Map<String, SlotData[]> map = Maps.newHashMap();
         for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet())
         {
@@ -66,7 +66,8 @@ public class ClientUtil
         return map;
     };
 
-    private static final JsonDeserializer<Map<String, ControlData>> ControlDataMapDeserializer = (json, typeOfT, context) -> {
+    private static final JsonDeserializer<Map<String, ControlData>> ControlDataMapDeserializer = (json, typeOfT, context) ->
+    {
         Map<String, ControlData> map = Maps.newHashMap();
         for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet())
         {
