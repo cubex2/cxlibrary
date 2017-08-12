@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
 
-version = "1.12-1.5.1"
+version = "1.12.1-1.6.0"
 group= "cubex2.cxlibrary" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "cxlibrary"
 
@@ -18,7 +18,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 minecraft {
-    version = "1.12-14.21.1.2387"
+    version = "1.12.1-14.22.0.2452"
     runDir = "run"
     mappings = "snapshot_20170624"
     makeObfSourceJar = false
