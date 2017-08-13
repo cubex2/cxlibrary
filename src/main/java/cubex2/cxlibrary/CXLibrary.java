@@ -6,7 +6,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = "cxlibrary", version = "1.6.0", name = "CXLibrary")
+@Mod(modid = "cxlibrary", version = "1.6.1", name = "CXLibrary", acceptedMinecraftVersions = "[1.12,)")
 public class CXLibrary
 {
     @SidedProxy(clientSide = "cubex2.cxlibrary.ClientProxy", serverSide = "cubex2.cxlibrary.CommonProxy")
