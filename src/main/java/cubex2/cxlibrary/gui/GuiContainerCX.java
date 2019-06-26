@@ -53,6 +53,7 @@ public class GuiContainerCX extends GuiContainer implements IGuiCX
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+        this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
 
         screen.drawForeground(mouseX, mouseY, partialTicks);
